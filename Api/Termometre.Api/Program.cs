@@ -8,6 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddSignalR();
 builder.Services.AddCors(policy => policy.AddDefaultPolicy(builder=> builder.SetIsOriginAllowed(_=>true).AllowAnyHeader().AllowCredentials().AllowAnyMethod().WithExposedHeaders("X-Pagination")));
 
+builder.Services.AddTransient<MyHub>();//<aslýnda mybusiness> kullanmak istedim
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,5 +28,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<MyHub>("/myhub");
+app.MapHub<MessageHub>("/messagehub");
 
 app.Run();
