@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="signalr.min.js"></script>
+    <script src="react.min.js"></script>
+    <script>
+        $(document).ready())=> {
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("http://*:5000/")
+                           .build();
+            conncection.start();
+                   .then => $("h4").html(connection.connectionId)
+
+            connection.on("receiveMessage", message => {
+                alert(message + "<br>");
+                        return "Client Result";
+            });
+        });
+    </script>
+</head>
+<body>
+    <input type="text" id="textMesssage" />
+    <button id="btnGonder">Gönder</button>
+
+</body>
+</html>
