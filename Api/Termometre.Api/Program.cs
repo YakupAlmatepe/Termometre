@@ -16,17 +16,17 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 app.Urls.Add("http://*:5000/");
 
 app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseRouting();
 app.MapHub<MyHub>("/myhub");
 app.MapHub<MessageHub>("/messagehub");
 
