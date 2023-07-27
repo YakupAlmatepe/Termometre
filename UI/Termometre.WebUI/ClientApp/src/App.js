@@ -50,6 +50,7 @@ const App = () => {
             })
             .catch((error) => {
                 console.error("API isteði sýrasýnda hata oluþtu:", error);
+
             });
     };
 
