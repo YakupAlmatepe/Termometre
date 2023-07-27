@@ -3,18 +3,16 @@ using DataAccessLayer.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace DataAaccessLayer.Migrations
 {
-    [DbContext(typeof(DataAccessLayer.Concrete.AppContext))]
-    [Migration("20230726073945_mig_2")]
-    partial class mig_2
+    [DbContext(typeof(ApplicationContext))]
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +37,7 @@ namespace DataAaccessLayer.Migrations
                     b.ToTable("Machines");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.RndomTempreture", b =>
+            modelBuilder.Entity("EntityLayer.Concrete.RandomTemperature", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -52,7 +50,7 @@ namespace DataAaccessLayer.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("RndomTempretures");
+                    b.ToTable("RandomTempretures");
                 });
 #pragma warning restore 612, 618
         }

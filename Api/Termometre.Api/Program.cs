@@ -1,3 +1,5 @@
+using DataAccessLayer.Concrete;
+using Microsoft.EntityFrameworkCore;
 using Termometre.Api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
+
+builder.Services.AddDbContext<ApplicationContext>(options => { options.UseSqlServer("Server=localhost,1433;Database=DbTempreture;User=SA;Password=Ykp14538-;"); });
+
+
 builder.Services.AddCors(policy => policy.AddDefaultPolicy(builder=> builder.SetIsOriginAllowed(_=>true).AllowAnyHeader().AllowCredentials().AllowAnyMethod().WithExposedHeaders("X-Pagination")));
 
 builder.Services.AddTransient<MyHub>();//<aslýnda mybusiness> kullanmak istedim

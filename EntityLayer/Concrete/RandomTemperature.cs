@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class RandomTempreture
+    public class RandomTemperature
     {
         [Key]
         public int ID { get; set; }

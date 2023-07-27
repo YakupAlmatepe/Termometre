@@ -1,10 +1,13 @@
 
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import React, { useEffect, useState } from "react";
+interface obj {
+    id: Number, tempreture: Number
 
+}
 const App = () => {
     const [connection, setConnection] = useState();
-    const [inputText, setInputText] = useState("asdas");
+    const [inputText, setInputText] = useState([]);
 
     useEffect(() => {
         getData();
@@ -32,7 +35,7 @@ const App = () => {
 
     const getData = () => {
         // API isteği atılıp son durum çekilecek
-        fetch("http://localhost:5000/api/getDataFromAPI", {
+        fetch("http://localhost:5000/api/Values/getDataFromAPI", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +46,7 @@ const App = () => {
                 // API'den gelen sonuçları kullan, örneğin:
                 console.log("API'den gelen sonuçlar:", data);
                 // Sonuçları kullanmak için burada uygun işlemleri yapabilirsiniz.
-                setInputText(data.message); // Örnek olarak gelen mesajı inputText olarak ayarladık
+                setInputText(data); // Örnek olarak gelen mesajı inputText olarak ayarladık
             })
             .catch((error) => {
                 console.error("API isteği sırasında hata oluştu:", error);
@@ -52,7 +55,12 @@ const App = () => {
 
     return (
         <>
-            <label>{inputText}</label>
+            {
+                inputText.map((row, index) => (
+                    <p key={row.id}>{row.tempreture}</p>
+                    )
+                )
+            }
         </>
     );
 };

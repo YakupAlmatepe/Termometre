@@ -10,9 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAaccessLayer.Migrations
 {
-    [DbContext(typeof(DataAccessLayer.Concrete.AppContext))]
-    [Migration("20230726073254_mig_1")]
-    partial class mig_1
+    [DbContext(typeof(ApplicationContext))]
+    [Migration("20230727104246_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,22 @@ namespace DataAaccessLayer.Migrations
                     b.HasKey("MachineId");
 
                     b.ToTable("Machines");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.RandomTemperature", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<int>("Tempreture")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("RandomTempretures");
                 });
 #pragma warning restore 612, 618
         }

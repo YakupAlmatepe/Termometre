@@ -1,12 +1,6 @@
 ﻿
-using System;
-using EntityLayer; // Entity modellerini içeren projenizin ismini buraya ekleyin
-using DataAccessLayer.Concrete; // Veritabanı bağlantıları ve AppContext sınıfını içeren projenizin ismini buraya ekleyin
+using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
-
-using System.ComponentModel.DataAnnotations;
-using Termometre.Consol1.Concrete;
-using Termometre.Consol1;
 using Microsoft.AspNetCore.SignalR.Client;
 
 public class Program
@@ -33,14 +27,14 @@ public class Program
             
             int sayi = randomtemp.Next(-40, 100);
 
-            using (var _context = new RandomTempDbContext())
+            using (var _context = new ApplicationContext())
             {
-                var randomTemperature = new RandomTemp
+                var randomTemperature = new RandomTemperature
                 {
                     Tempreture = sayi
                 };
 
-                _context.RandomTemps.Add(randomTemperature); // Update işlemi kaldırıldı
+                _context.RandomTempretures.Add(randomTemperature); // Update işlemi kaldırıldı
                 _context.SaveChanges();
                
             }

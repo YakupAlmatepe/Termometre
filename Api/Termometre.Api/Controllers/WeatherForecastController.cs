@@ -18,10 +18,10 @@ namespace Termometre.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet(Name = "getDataFromAPI")]
         public IActionResult Get()
         {
-            return Ok();
+            return Ok("selam");
         }
     }
 }
