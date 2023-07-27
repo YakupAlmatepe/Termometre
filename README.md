@@ -1,0 +1,1 @@
+# Termometre projesinde Asp.net core 6 ile geliştirilmiş bir SignalR Projesidir. UI kısmı React ile yaptık. signalR kullanılan projede birden fazla client ile konuşma dinleme işlemleri yapılması hedeflenmektedir.
