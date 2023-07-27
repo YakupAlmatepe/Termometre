@@ -15,16 +15,22 @@ public class Program
     {
 
         var hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:5000/myhub")
+                .WithUrl("http://localhost:5000/myhub")
+                .WithAutomaticReconnect()
                 .Build();
 
+        hubConnection.On<string>("ReceiveMessage",OnReceiveMessage);
          hubConnection.StartAsync();
         Random randomtemp = new Random();
 
         List<int> randomNumbers = new List<int>();
 
-        for (int i = 0; i < 1; i++)
+        while(true)
         {
+            Console.WriteLine("Entera bas");
+            Console.ReadLine();
+
+            
             int sayi = randomtemp.Next(-40, 100);
 
             using (var _context = new RandomTempDbContext())
@@ -38,9 +44,15 @@ public class Program
                 _context.SaveChanges();
                
             }
-
+            hubConnection.InvokeAsync("SendMessage", "message");
             Console.WriteLine(sayi.ToString());
+
         }
+    }
+
+    private static void OnReceiveMessage(string obj)
+    {
+        Console.WriteLine($"Mesaj Geldi={obj}");
     }
 }
 
