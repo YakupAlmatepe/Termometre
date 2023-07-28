@@ -1,13 +1,27 @@
 ﻿
 using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
+using MassTransit;
 using Microsoft.AspNetCore.SignalR.Client;
+using System.Threading.Channels;
 
 public class Program
 {
     static void Main(string[] args)
     {
+        var bus = Bus.Factory.CreateUsingRabbitMq(factory =>
+        {
+            factory.Host("localhost", "/", h =>
+            {
+                h.Username("altis");
+                h.Password("altis");
 
+            });
+            factory.ReceiveEndpoint();
+        });
+
+        //Kanal başlatılıyor
+        bus.Start();
         var hubConnection = new HubConnectionBuilder()
                 .WithUrl("http://localhost:5000/myhub")
                 .WithAutomaticReconnect()
@@ -25,25 +39,21 @@ public class Program
             Console.ReadLine();
 
             
-            int sayi = randomtemp.Next(-40, 100);
+            //rABBİTMQ İÇİN Consume edilecek
 
-            using (var _context = new ApplicationContext())
-            {
-                var randomTemperature = new RandomTemperature
-                {
-                    Tempreture = sayi
-                };
+            //using (var _context = new ApplicationContext())
+            //{
 
-                _context.RandomTempretures.Add(randomTemperature); // Update işlemi kaldırıldı
-                _context.SaveChanges();
+            //    _context.RandomTempretures.Add(randomTemperature); // Update işlemi kaldırıldı
+            //    _context.SaveChanges();
                
-            }
-            hubConnection.InvokeAsync("SendMessage", "message");
-            Console.WriteLine(sayi.ToString());
+            //}
+            //hubConnection.InvokeAsync("SendMessage", "message");
+            //Console.WriteLine(sayi.ToString());
 
         }
     }
-
+    
     private static void OnReceiveMessage(string obj)
     {
         Console.WriteLine($"Mesaj Geldi={obj}");
