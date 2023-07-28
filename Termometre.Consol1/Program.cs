@@ -17,9 +17,26 @@ public class Program
                 h.Password("altis");
 
             });
-            factory.ReceiveEndpoint();
-        });
+            factory.ReceiveEndpoint("randomNumberQueue", ep =>
+            {
+                // Gelen mesajları işlemek için bir tüketici (consumer) oluşturuyoruz
+                ep.Handler<RandomTemperature>(context =>
+                {
+                    var randomTemperature = context.Message.Tempreture;
 
+                    // Konsola mesajı yazdırıyoruz
+                    Console.WriteLine($"Gelen sıcaklık değeri: {randomTemperature}");
+
+                    
+                    using (var _context = new ApplicationContext())
+                    {
+                        _context.RandomTempretures.Add(new RandomTemperature { Tempreture = randomTemperature });
+                        _context.SaveChanges();
+                    }
+                    return Task.CompletedTask;
+                });
+            });
+        });    
         //Kanal başlatılıyor
         bus.Start();
         var hubConnection = new HubConnectionBuilder()
